@@ -1,3 +1,6 @@
-# kappa
+WORLD_SQUARE_MULTIPLIER = 22
+WORLD_SQUARE_SIZE = 20
+ANIMAL_START_MAX = 7
+PLANT_START_MAX = 2
 
-# more kappa
+turn = 0
