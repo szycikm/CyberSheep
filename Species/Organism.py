@@ -37,7 +37,7 @@ class Organism:
 	def introduce(self):
 		pass
 
-	def tryresistattack(self, attacker):
+	def tryresistattack(attacker):
 		return False
 
 	def gettype(self):
