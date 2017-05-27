@@ -6,8 +6,8 @@ from Species.Plant import Plant
 class Animal(Organism):
 
 	def __init__(self, fromworld, x, y):
-		self._name = Names.getrandomname()
 		super().__init__(fromworld, x, y)
+		self._name = Names.getrandomname()
 
 	def action(self):
 		"""default animal behaviour"""

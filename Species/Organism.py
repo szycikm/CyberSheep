@@ -14,8 +14,8 @@ class Organism:
 		self._fromworld = fromworld
 		self._position = Coordinates(x, y)
 		self._type = None
-		self._strength = None
-		self._initiative = None
+		self._strength = 0
+		self._initiative = 0
 		self.__age = 0
 		self.__alive = True
 
