@@ -15,7 +15,7 @@ class Names:
 		Names.__names = names
 
 	@staticmethod
-	def getspciesname(letter):
+	def getspeciesname(letter):
 		if letter in Names.__speciesnames:
 			return Names.__speciesnames[letter]
 		return "Undefined"

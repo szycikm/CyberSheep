@@ -1,5 +1,6 @@
 from Names import Names
 from Species.Organism import Organism, ADULT_AGE
+from Species.Plant import Plant
 
 
 class Animal(Organism):
@@ -21,7 +22,7 @@ class Animal(Organism):
 			print("%s is all grown up now!" % (self.introduce()))  # TODO write this in UI
 
 	def introduce(self):
-		return "%s %s" % (Names.getspciesname(self._type), self._name)
+		return "%s %s" % (Names.getspeciesname(self._type), self._name)
 
 	def tostring(self):
 		return super().tostring() + ";" + self._name
