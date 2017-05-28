@@ -72,4 +72,4 @@ class Human(Animal):
 		self._fromworld.sethumanalive(False)
 
 	def tostring(self):
-		return "%s;%i" % (super().tostring(), self.__specialcountdown)
+		return "%s%i" % (super().tostring(), self.__specialcountdown)

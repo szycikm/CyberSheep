@@ -27,6 +27,3 @@ class Antelope(Animal):
 				return True
 		print("%s tried to run, but you can't hide from %s" % (self.introduce(), attacker.introduce()))  # TODO write this in UI
 		return False
-
-	def tostring(self):
-		return "%s;" % (super().tostring())

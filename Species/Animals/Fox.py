@@ -23,6 +23,3 @@ class Fox(Animal):
 				self.move(coords)
 				return
 		print("%s decided to stay in place" % (self.introduce()))  # TODO print this in UI
-
-	def tostring(self):
-		return "%s;" % (super().tostring())

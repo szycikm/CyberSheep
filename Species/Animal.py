@@ -25,7 +25,7 @@ class Animal(Organism):
 		return "%s %s" % (Names.getspeciesname(self._type), self._name)
 
 	def tostring(self):
-		return super().tostring() + ";" + self._name
+		return "%s;%s;" % (super().tostring(), self._name)
 
 	def move(self, nextposition):
 		if self.collision(self._fromworld.getorganismbyposition(nextposition)):

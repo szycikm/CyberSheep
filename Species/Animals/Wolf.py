@@ -13,6 +13,3 @@ class Wolf(Animal):
 
 	def clone(self, fromworld, position):
 		return Wolf(fromworld, position.x, position.y)
-
-	def tostring(self):
-		return "%s;" % (super().tostring())

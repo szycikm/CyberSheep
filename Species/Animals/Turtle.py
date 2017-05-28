@@ -26,6 +26,3 @@ class Turtle(Animal):
 			super().action()
 		else:
 			print("%s decided not to move" % (self.introduce()))  # TODO print this in UI
-
-	def tostring(self):
-		return "%s;" % (super().tostring())
