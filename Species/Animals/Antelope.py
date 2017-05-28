@@ -5,13 +5,11 @@ class Antelope(Animal):
 
 	def __init__(self, fromworld, x=None, y=None, age=0, strength=0, initiative=0, name=""):
 		super().__init__(fromworld, x, y)
-		if age != 0:
-			self._age = age
+		self._age = age
 		self.strength = strength if strength != 0 else 4
 		self.initiative = initiative if initiative != 0 else 4
-		if name != "":
-			self._name = name
-		self._type = 'A';
+		self._name = name
+		self._type = 'A'
 
 	def clone(self, fromworld, position):
 		return Antelope(fromworld, position.x, position.y)

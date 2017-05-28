@@ -1,3 +1,6 @@
+from Species.Animals.Human import Human
+
+
 class World:
 
 	def __init__(self, maxxy):
