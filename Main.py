@@ -1,11 +1,12 @@
 from Names import Names
+from tkinter import *
 
-WORLD_SQUARE_MULTIPLIER = 22
-WORLD_SQUARE_SIZE = 20
 ANIMAL_START_MAX = 7
 PLANT_START_MAX = 2
 
 turn = 0
+worldx = 0
+worldy = 0
 
 Names.setspeciesnames({
 	'W': "Wolf",
@@ -14,11 +15,12 @@ Names.setspeciesnames({
 	'T': "Turtle",
 	'A': "Antelope",
 	'H': "Human",
+	'C': "Cyber Sheep",
 	'G': "Grass",
 	'D': "Dairy",
 	'U': "Guarana",
 	'B': "Wolf Berries",
-	'C': "Sosnowski's Borsch"
+	'O': "Sosnowsky's Borsch"
 })
 
 Names.setnames([
@@ -45,3 +47,8 @@ Names.setnames([
 	"Matilda",
 	"Jenny"
 ])
+
+root = Tk()
+label = Label(root, text="je sa")
+label.pack()
+root.mainloop()

@@ -1,5 +1,8 @@
 from abc import abstractmethod
 from random import randint, shuffle
+
+import math
+
 from Coordinates import Coordinates
 
 ADULT_AGE = 5
@@ -88,3 +91,6 @@ class Organism:
 			randomized.append(Coordinates(self._position.x, self._position.y - 1))
 		shuffle(randomized)
 		return randomized
+
+	def getdistanceto(self, other):
+		return math.sqrt((self.getxy().x - other.getxy().x)**2 + (self.getxy().y - other.getxy().y)**2)

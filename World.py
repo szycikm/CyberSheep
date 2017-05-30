@@ -20,6 +20,13 @@ class World:
 				return org
 		return None
 
+	def getorganismsbytype(self, type):
+		orgs = []
+		for org in self.__organisms:
+			if org.isalive() and isinstance(org, type):
+				orgs.append(org)
+		return orgs
+
 	def gethuman(self):
 		for org in self.__organisms:
 			if isinstance(org, Human) and org.isalive():
