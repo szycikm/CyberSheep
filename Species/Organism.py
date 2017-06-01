@@ -81,16 +81,16 @@ class Organism:
 	def randomizefields(self):
 		"""randomizes 2 to 4 new coordinates respecting the world limits"""
 		randomized = []
-		if self._position.x + 1 < self._fromworld.getmaxxy().x:
-			randomized.append(Coordinates(self._position.x + 1, self._position.y))
-		if self._position.x > 0:
-			randomized.append(Coordinates(self._position.x - 1, self._position.y))
-		if self._position.y + 1 < self._fromworld.getmaxxy().y:
-			randomized.append(Coordinates(self._position.x, self._position.y + 1))
-		if self._position.y > 0:
-			randomized.append(Coordinates(self._position.x, self._position.y - 1))
+		if self.getxy().x + 1 < self._fromworld.getmaxxy().x:
+			randomized.append(Coordinates(self.getxy().x + 1, self.getxy().y))
+		if self.getxy().x > 0:
+			randomized.append(Coordinates(self.getxy().x - 1, self.getxy().y))
+		if self.getxy().y + 1 < self._fromworld.getmaxxy().y:
+			randomized.append(Coordinates(self.getxy().x, self.getxy().y + 1))
+		if self.getxy().y > 0:
+			randomized.append(Coordinates(self.getxy().x, self.getxy().y - 1))
 		shuffle(randomized)
 		return randomized
 
 	def getdistanceto(self, other):
-		return math.sqrt((self.getxy().x - other.getxy().x)**2 + (self.getxy().y - other.getxy().y)**2)
+		return math.fabs(self.getxy().x - other.getxy().x) + math.fabs(self.getxy().y - other.getxy().y)
