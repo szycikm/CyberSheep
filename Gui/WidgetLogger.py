@@ -1,7 +1,7 @@
 import logging
 from tkinter import DISABLED, END, NORMAL
 
-# from https://stackoverflow.com/questions/13318742/python-logging-to-tkinter-text-widget
+# based on https://stackoverflow.com/questions/13318742/python-logging-to-tkinter-text-widget
 
 
 class WidgetLogger(logging.Handler):

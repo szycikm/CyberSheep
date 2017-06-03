@@ -1,10 +1,11 @@
+from Coordinates import Coordinates
 from Species.Animals.Human import Human
 
 
 class World:
 
-	def __init__(self, maxxy):
-		self.__maxxy = maxxy
+	def __init__(self, maxx, maxy):
+		self.__maxxy = Coordinates(maxx, maxy)
 		self.__organisms = []
 		self.humanalive = False
 
