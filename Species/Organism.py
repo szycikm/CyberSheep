@@ -1,8 +1,7 @@
 from abc import abstractmethod
 from random import randint, shuffle
-
 import math
-
+from Names import Names
 from Coordinates import Coordinates
 
 ADULT_AGE = 5
@@ -19,7 +18,7 @@ class Organism:
 		self._type = None
 		self._strength = 0
 		self._initiative = 0
-		self.__age = 0
+		self._age = 0
 		self.__alive = True
 
 	def __lt__(self, other):
@@ -46,15 +45,18 @@ class Organism:
 	def gettype(self):
 		return self._type
 
+	def getcolor(self):
+		return Names.getspeciescolor(self._type)
+
 	def draw(self):
 		"""if organism is below ADULT_AGE turns draw it small. Just for fun."""
-		return self._type.lower() if self.__age < ADULT_AGE else self._type
+		return self._type.lower() if self._age < ADULT_AGE else self._type
 
 	def getxy(self):
 		return self._position
 
 	def getage(self):
-		return self.__age
+		return self._age
 
 	def getstrength(self):
 		return self._strength
@@ -66,7 +68,7 @@ class Organism:
 		return self._initiative
 
 	def incrementage(self):
-		self.__age += 1
+		self._age += 1
 
 	def isalive(self):
 		return self.__alive
@@ -76,7 +78,7 @@ class Organism:
 		self.__alive = False  # don't actually die, just mark organism as dead
 
 	def tostring(self):
-		return "%s;%i;%i%i%i%i" % (self._type, self.__age, self._strength, self._initiative, self._position.x, self._position.y)
+		return "%s;%i;%i%i%i%i" % (self._type, self._age, self._strength, self._initiative, self._position.x, self._position.y)
 
 	def randomizefields(self):
 		"""randomizes 2 to 4 new coordinates respecting the world limits"""

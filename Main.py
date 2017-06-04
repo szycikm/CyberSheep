@@ -1,8 +1,8 @@
 from random import randint
-from tkinter import *
-from tkinter.ttk import Treeview
+from tkinter import Grid, Label, Button, Scrollbar, Text, N, E, W, S, Tk
 from Gui.InputDialog import InputDialog
 from Gui.Logger import Logger
+from Gui.TheGrid import TheGrid
 from Names import Names
 from Species.Animals.Antelope import Antelope
 from Species.Animals.CyberSheep import CyberSheep
@@ -32,11 +32,19 @@ class App:
 		Grid.columnconfigure(self.root, 1, weight=1)
 		Grid.columnconfigure(self.root, 2, weight=0)
 		Grid.rowconfigure(self.root, 1, weight=1)
+
+		self.turn = 0
+		worldx = int(InputDialog(self.root, "Enter world width", 10).show())
+		worldy = int(InputDialog(self.root, "Enter world height", 10).show())
+
+		animalstartmax = int((worldx * worldy) / ANIMAL_START_DIVIDER)
+		plantstartmax = int((worldx * worldy) / PLANT_START_DIVIDER)
+
 		nfolabel = Label(self.root, text="Programowanie Obiektowe projekt 3: Cyber Sheep. Marcin Szycik 165116")
 		nfolabel.grid(row=0, column=0, columnspan=2)
 
-		thegrid = Treeview(self.root, displaycolumns=None)
-		thegrid.grid(row=1, column=0, columnspan=2, sticky=N + E + W + S)
+		self.__thegrid = TheGrid(self.root, worldx, worldy, "+")
+		self.__thegrid.grid(row=1, column=0, columnspan=2, sticky=N + E + W + S)
 
 		nextturnbtn = Button(self.root, text="Next turn")
 		nextturnbtn.grid(row=2, column=0, sticky=W + E)
@@ -84,6 +92,20 @@ class App:
 			'B': "Wolf Berries",
 			'O': "Sosnowsky's Borsch"
 		})
+		Names.setspeciescolors({
+			'W': "red",
+			'S': "white",
+			'F': "orange",
+			'T': "brown",
+			'A': "gold",
+			'H': "blue",
+			'C': "cyan",
+			'G': "lawn green",
+			'D': "yellow",
+			'U': "deep pink",
+			'B': "maroon",
+			'O': "sea green"
+		})
 		Names.setnames([
 			"Jake",
 			"Winston",
@@ -108,13 +130,6 @@ class App:
 			"Matilda",
 			"Jenny"
 		])
-
-		self.turn = 0
-		worldx = int(InputDialog(self.root, "Enter world x", 20).show())
-		worldy = int(InputDialog(self.root, "Enter world y", 20).show())
-
-		animalstartmax = int((worldx * worldy) / ANIMAL_START_DIVIDER)
-		plantstartmax = int((worldx * worldy) / PLANT_START_DIVIDER)
 
 		# create world
 		self.world = World(worldx, worldy)
@@ -158,6 +173,8 @@ class App:
 		for i in range(0, randint(0, plantstartmax)):
 			self.world.addorganism(SosnowskysBorsch(self.world))
 
+		self.drawworld()
+
 	def turnpress(self, event):
 		if self.world.humanalive:
 			Logger.log("Give human something to do")
@@ -173,7 +190,9 @@ class App:
 		Logger.log("++++ Round %d ended ++++" % self.turn)
 
 	def drawworld(self):
-		Logger.log("TODO")  # TODO
+		self.__thegrid.clear()
+		for org in self.world.getorganisms():
+			self.__thegrid.show(org.getxy().x, org.getxy().y, org.gettype(), org.getcolor())
 
 	def tryhumantask(self, task):
 		if not self.world.humanalive:

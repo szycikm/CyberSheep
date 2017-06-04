@@ -34,6 +34,9 @@ class World:
 				return org
 		return None
 
+	def getorganisms(self):
+		return self.__organisms
+
 	def doturn(self):
 		self.__organisms.sort()
 		cnt = self.getorganismcount()  # organism count can get bigger so it's important to keep it in separate variable
