@@ -28,6 +28,7 @@ class Human(Animal):
 		self._type = 'H'
 		self.__specialcountdown = specialcountdown
 		self.__nexttask = HumanTasks.DO_NOTHING
+		self._fromworld.humanalive = True
 
 	def clone(self, fromworld, position):
 		return Human(fromworld, position.x, position.y)
@@ -35,7 +36,7 @@ class Human(Animal):
 	def action(self):
 		if self.__specialcountdown > 0:
 			self.__specialcountdown -= 1
-			self.strength -= 1
+			self._strength -= 1
 			Logger.log("%s's strength is dropping! %i turns till normal" % (self.introduce(), self.__specialcountdown))
 		if self.__nexttask == HumanTasks.GO_UP:
 			self.move(Coordinates(self._position.x, self._position.y - 1))
@@ -47,7 +48,7 @@ class Human(Animal):
 			self.move(Coordinates(self._position.x + 1, self._position.y))
 		elif self.__nexttask == HumanTasks.DO_SPECIAL:
 			self.__specialcountdown = SPECIAL_COUNTDOWN
-			self.strength = SPECIAL_STRENGTH
+			self._strength = SPECIAL_STRENGTH
 			Logger.log("%s used their special ability!" % (self.introduce()))
 		else:
 			Logger.log("%s had nothing to do this turn" % (self.introduce()))

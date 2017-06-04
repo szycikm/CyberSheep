@@ -154,7 +154,6 @@ class App:
 		Logger.log("Created world (%dx%d)" % (worldx, worldy))
 
 		self.world.addorganism(Human(self.world))  # HUMAN AFTER ALL (actually add him first)
-		self.world.humanalive = True  # yep, he sure seems alive
 
 		# add healthy amount of other organisms
 
@@ -242,7 +241,14 @@ class App:
 		x = int(event.x/SCALE)
 		y = int(event.y/SCALE)
 		if x <= self.world.getmaxxy().x and y <= self.world.getmaxxy().y and self.world.getorganismbyposition(Coordinates(x, y)) is None:
-			self.world.addorganism(self.__kinds[OrganismDialog(self.root).show()](self.world, x, y))  # still can't believe this actually works
+			kind = OrganismDialog(self.root).show()
+			if kind == "H" and self.world.humanalive:
+				Logger.log("Can't have two humans I'm afraid...")
+				return
+			elif kind == "":
+				return
+			self.world.addorganism(self.__kinds[kind](self.world, x, y))  # still can't believe this actually works
+			self.drawworld()
 		else:
 			Logger.log("Can't add new organism here")
 
