@@ -76,4 +76,4 @@ class Human(Animal):
 		self._fromworld.humanalive = False
 
 	def tostring(self):
-		return "%s%i" % (super().tostring(), self.__specialcountdown)
+		return "%s%d" % (super().tostring(), self.__specialcountdown)

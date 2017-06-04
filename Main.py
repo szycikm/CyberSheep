@@ -46,9 +46,8 @@ class App:
 		nfolabel = Label(self.root, text="Programowanie Obiektowe projekt 3: Cyber Sheep. Marcin Szycik 165116")
 		nfolabel.grid(row=0, column=0, columnspan=2)
 
-		self.__thegrid = TheGrid(self.root, worldx, worldy, "+")
-		self.__thegrid.grid(row=1, column=0, columnspan=2, sticky=N + E + W + S)
-		self.__thegrid.bind("<Button-1>", self.addorg)
+		self.__thegrid = None
+		self.setupthegrid(worldx, worldy)
 
 		nextturnbtn = Button(self.root, text="Next turn")
 		nextturnbtn.grid(row=2, column=0, sticky=W + E)
@@ -60,17 +59,19 @@ class App:
 
 		savebtn = Button(self.root, text="Save")
 		savebtn.grid(row=3, column=0, sticky=W + E)
+		savebtn.bind("<Button-1>", self.saveworld)
 
 		loadbtn = Button(self.root, text="Load")
 		loadbtn.grid(row=3, column=1, sticky=W + E)
+		loadbtn.bind("<Button-1>", self.loadworld)
 
 		self.root.bind("<Up>", self.goup)
 		self.root.bind("<Down>", self.godown)
 		self.root.bind("<Left>", self.goleft)
 		self.root.bind("<Right>", self.goright)
 
-		countlbl = Label(self.root, text="Turn 0")
-		countlbl.grid(row=4, column=0, columnspan=2, sticky=W + E)
+		self.__countlbl = Label(self.root, text="Turn 0")
+		self.__countlbl.grid(row=4, column=0, columnspan=2, sticky=W + E)
 
 		scrollbar = Scrollbar(self.root)
 		scrollbar.grid(row=0, column=3, rowspan=5, sticky=N + S)
@@ -192,6 +193,14 @@ class App:
 
 		self.drawworld()
 
+	def setupthegrid(self, worldx, worldy):
+		if self.__thegrid is not None:
+			self.__thegrid.grid_forget()
+			self.__thegrid.unbind("<Button-1>")
+		self.__thegrid = TheGrid(self.root, worldx, worldy, "+")
+		self.__thegrid.grid(row=1, column=0, columnspan=2, sticky=N + E + W + S)
+		self.__thegrid.bind("<Button-1>", self.addorg)
+
 	def turnpress(self, event):
 		if self.world.humanalive:
 			Logger.log("Give human something to do")
@@ -200,6 +209,7 @@ class App:
 
 	def doturn(self):
 		self.turn += 1
+		self.setturnlbl()
 		Logger.log("======= Round %d =======" % self.turn)
 		Logger.log("Population: %d" % self.world.getorganismcount())
 		self.world.doturn()
@@ -237,6 +247,9 @@ class App:
 	def dospecial(self, event):
 		self.tryhumantask(HumanTasks.DO_SPECIAL)
 
+	def setturnlbl(self):
+		self.__countlbl.config(text="Turn %d" % self.turn)
+
 	def addorg(self, event):
 		x = int(event.x/SCALE)
 		y = int(event.y/SCALE)
@@ -247,10 +260,46 @@ class App:
 				return
 			elif kind == "":
 				return
-			self.world.addorganism(self.__kinds[kind](self.world, x, y))  # still can't believe this actually works
-			self.drawworld()
+			if kind in self.__kinds:
+				self.world.addorganism(self.__kinds[kind](self.world, x, y))  # still can't believe this actually works
+				self.drawworld()
 		else:
 			Logger.log("Can't add new organism here")
+
+	def saveworld(self, event):
+		file = open("save.dat", 'w')
+		file.write("%d\n" % self.turn)
+		file.write(self.world.tostring())
+		Logger.log("Saved simulation state")
+
+	def loadworld(self, event):
+		try:
+			file = open("save.dat", 'r')
+		except IOError:
+			Logger.log("Save file doesn't exist")
+			return
+		self.turn = int(file.readline())
+		self.setturnlbl()
+		worldx = int(file.readline())
+		worldy = int(file.readline())
+		self.setupthegrid(worldx, worldy)
+		self.world = World(worldx, worldy)
+		for line in file:
+			attr = line.split(';')
+			for numeric in range(1, 6):
+				attr[numeric] = int(attr[numeric])
+			if attr[7] != '' and attr[7] != '\n':
+				attr[7] = int(attr[7])
+			kind = attr[0]
+			if kind in self.__kinds:
+				if kind == 'H':
+					self.world.addorganism(self.__kinds[kind](self.world, attr[1], attr[2], attr[3], attr[4], attr[5], attr[6], attr[7]))
+				elif kind == 'W' or kind == 'S' or kind == 'F' or kind == 'T' or kind == 'A' or kind == 'C':
+					self.world.addorganism(self.__kinds[kind](self.world, attr[1], attr[2], attr[3], attr[4], attr[5], attr[6]))
+				elif kind == 'G' or kind == 'D' or kind == 'U' or kind == 'B' or kind == 'O':
+					self.world.addorganism(self.__kinds[kind](self.world, attr[1], attr[2], attr[3], attr[4], attr[5]))
+		self.drawworld()
+		Logger.log("Loaded simulation state")
 
 if __name__ == '__main__':
 	root = Tk()

@@ -11,8 +11,8 @@ class Organism:
 
 	def __init__(self, fromworld, x, y):
 		if x is None or y is None:
-			x = randint(0, fromworld.getmaxxy().x)
-			y = randint(0, fromworld.getmaxxy().y)
+			x = randint(0, fromworld.getmaxxy().x - 1)
+			y = randint(0, fromworld.getmaxxy().y - 1)
 		self._fromworld = fromworld
 		self._position = Coordinates(x, y)
 		self._type = None
@@ -78,7 +78,7 @@ class Organism:
 		self.__alive = False  # don't actually die, just mark organism as dead
 
 	def tostring(self):
-		return "%s;%i;%i%i%i%i" % (self._type, self._age, self._strength, self._initiative, self._position.x, self._position.y)
+		return "%s;%d;%d;%d;%d;%d" % (self._type, self._position.x, self._position.y, self._age, self._strength, self._initiative)
 
 	def randomizefields(self):
 		"""randomizes 2 to 4 new coordinates respecting the world limits"""

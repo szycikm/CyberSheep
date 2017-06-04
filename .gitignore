@@ -139,3 +139,6 @@ tmtagsHistory
 *.sublime-project
 *.sublime-workspace
 .bundle
+
+# save file
+save.dat

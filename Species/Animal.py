@@ -31,7 +31,7 @@ class Animal(Organism):
 	def move(self, nextposition):
 		if self.collision(self._fromworld.getorganismbyposition(nextposition)):
 			self._position = nextposition
-			Logger.log("%s moved to (%i,%i)" % (self.introduce(), self._position.x, self._position.y))
+			Logger.log("%s moved to (%d,%d)" % (self.introduce(), self._position.x, self._position.y))
 
 	def randomizefield(self):
 		"""just grab the first random field"""
