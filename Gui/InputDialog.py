@@ -5,7 +5,7 @@ from tkinter import *
 
 class InputDialog(Toplevel):
 
-	def __init__(self, parent, hint, default):
+	def __init__(self, parent, hint="Hint", default=""):
 		Toplevel.__init__(self, parent)
 		self.value = StringVar()
 		self.value.set(default)

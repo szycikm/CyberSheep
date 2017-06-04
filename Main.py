@@ -7,7 +7,7 @@ from Names import Names
 from Species.Animals.Antelope import Antelope
 from Species.Animals.CyberSheep import CyberSheep
 from Species.Animals.Fox import Fox
-from Species.Animals.Human import Human
+from Species.Animals.Human import Human, HumanTasks
 from Species.Animals.Sheep import Sheep
 from Species.Animals.Turtle import Turtle
 from Species.Animals.Wolf import Wolf
@@ -40,16 +40,22 @@ class App:
 
 		nextturnbtn = Button(self.root, text="Next turn")
 		nextturnbtn.grid(row=2, column=0, sticky=W + E)
-		nextturnbtn.bind("<Button-1>", self.doturn)
+		nextturnbtn.bind("<Button-1>", self.turnpress)
 
 		specialbtn = Button(self.root, text="Special ability")
 		specialbtn.grid(row=2, column=1, sticky=W + E)
+		specialbtn.bind("<Button-1>", self.dospecial)
 
 		savebtn = Button(self.root, text="Save")
 		savebtn.grid(row=3, column=0, sticky=W + E)
 
 		loadbtn = Button(self.root, text="Load")
 		loadbtn.grid(row=3, column=1, sticky=W + E)
+
+		self.root.bind("<Up>", self.goup)
+		self.root.bind("<Down>", self.godown)
+		self.root.bind("<Left>", self.goleft)
+		self.root.bind("<Right>", self.goright)
 
 		countlbl = Label(self.root, text="Turn 0")
 		countlbl.grid(row=4, column=0, columnspan=2, sticky=W + E)
@@ -152,9 +158,14 @@ class App:
 		for i in range(0, randint(0, plantstartmax)):
 			self.world.addorganism(SosnowskysBorsch(self.world))
 
-	def doturn(self, event):
-		self.turn += 1
+	def turnpress(self, event):
+		if self.world.humanalive:
+			Logger.log("Give human something to do")
+			return
+		self.doturn()
 
+	def doturn(self):
+		self.turn += 1
 		Logger.log("======= Round %d =======" % self.turn)
 		Logger.log("Population: %d" % self.world.getorganismcount())
 		self.world.doturn()
@@ -163,6 +174,32 @@ class App:
 
 	def drawworld(self):
 		Logger.log("TODO")  # TODO
+
+	def tryhumantask(self, task):
+		if not self.world.humanalive:
+			Logger.log("Human is dead.")
+			return
+		human = self.world.gethuman()
+		if human is not None and human.istasklegal(task):
+			human.setnexttask(task)
+			self.doturn()
+		else:
+			Logger.log("Invalid human task")
+
+	def goup(self, event):
+		self.tryhumantask(HumanTasks.GO_UP)
+
+	def godown(self, event):
+		self.tryhumantask(HumanTasks.GO_DOWN)
+
+	def goleft(self, event):
+		self.tryhumantask(HumanTasks.GO_LEFT)
+
+	def goright(self, event):
+		self.tryhumantask(HumanTasks.GO_RIGHT)
+
+	def dospecial(self, event):
+		self.tryhumantask(HumanTasks.DO_SPECIAL)
 
 if __name__ == '__main__':
 	root = Tk()
