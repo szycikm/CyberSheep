@@ -18,9 +18,9 @@ from Species.Plants.SosnowskysBorsch import SosnowskysBorsch
 from Species.Plants.WolfBerries import WolfBerries
 from World import World
 
-# initial spawn config
-ANIMAL_START_MAX = 7
-PLANT_START_MAX = 2
+# initial spawn proportions
+ANIMAL_START_DIVIDER = 40
+PLANT_START_DIVIDER = 60
 
 
 class App:
@@ -104,8 +104,11 @@ class App:
 		])
 
 		self.turn = 0
-		worldx = int(InputDialog(self.root, "Enter world x").show())
-		worldy = int(InputDialog(self.root, "Enter world y").show())
+		worldx = int(InputDialog(self.root, "Enter world x", 20).show())
+		worldy = int(InputDialog(self.root, "Enter world y", 20).show())
+
+		animalstartmax = int((worldx * worldy) / ANIMAL_START_DIVIDER)
+		plantstartmax = int((worldx * worldy) / PLANT_START_DIVIDER)
 
 		# create world
 		self.world = World(worldx, worldy)
@@ -116,37 +119,37 @@ class App:
 
 		# add healthy amount of other organisms
 
-		for i in range(0, randint(0, ANIMAL_START_MAX)):
+		for i in range(0, randint(0, animalstartmax)):
 			self.world.addorganism(Wolf(self.world))
 
-		for i in range(0, randint(0, ANIMAL_START_MAX)):
+		for i in range(0, randint(0, animalstartmax)):
 			self.world.addorganism(Sheep(self.world))
 
-		for i in range(0, randint(0, ANIMAL_START_MAX)):
+		for i in range(0, randint(0, animalstartmax)):
 			self.world.addorganism(Fox(self.world))
 
-		for i in range(0, randint(0, ANIMAL_START_MAX)):
+		for i in range(0, randint(0, animalstartmax)):
 			self.world.addorganism(Turtle(self.world))
 
-		for i in range(0, randint(0, ANIMAL_START_MAX)):
+		for i in range(0, randint(0, animalstartmax)):
 			self.world.addorganism(Antelope(self.world))
 
-		for i in range(0, randint(0, ANIMAL_START_MAX)):
+		for i in range(0, randint(0, animalstartmax)):
 			self.world.addorganism(CyberSheep(self.world))
 
-		for i in range(0, randint(0, PLANT_START_MAX)):
+		for i in range(0, randint(0, plantstartmax)):
 			self.world.addorganism(Grass(self.world))
 
-		for i in range(0, randint(0, PLANT_START_MAX)):
+		for i in range(0, randint(0, plantstartmax)):
 			self.world.addorganism(Dairy(self.world))
 
-		for i in range(0, randint(0, PLANT_START_MAX)):
+		for i in range(0, randint(0, plantstartmax)):
 			self.world.addorganism(Guarana(self.world))
 
-		for i in range(0, randint(0, PLANT_START_MAX)):
+		for i in range(0, randint(0, plantstartmax)):
 			self.world.addorganism(WolfBerries(self.world))
 
-		for i in range(0, randint(0, PLANT_START_MAX)):
+		for i in range(0, randint(0, plantstartmax)):
 			self.world.addorganism(SosnowskysBorsch(self.world))
 
 	def doturn(self, event):

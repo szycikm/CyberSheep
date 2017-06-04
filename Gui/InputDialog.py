@@ -5,9 +5,10 @@ from tkinter import *
 
 class InputDialog(Toplevel):
 
-	def __init__(self, parent, hint):
+	def __init__(self, parent, hint, default):
 		Toplevel.__init__(self, parent)
 		self.value = StringVar()
+		self.value.set(default)
 		self.label = Label(self, text=hint)
 		self.entry = Entry(self, textvariable=self.value)
 		self.ok_button = Button(self, text="OK", command=self.__ok_click)
