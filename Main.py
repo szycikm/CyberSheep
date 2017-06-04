@@ -1,8 +1,11 @@
 from random import randint
 from tkinter import Grid, Label, Button, Scrollbar, Text, N, E, W, S, Tk
+
+from Coordinates import Coordinates
 from Gui.InputDialog import InputDialog
 from Gui.Logger import Logger
-from Gui.TheGrid import TheGrid
+from Gui.OrganismDialog import OrganismDialog
+from Gui.TheGrid import TheGrid, SCALE
 from Names import Names
 from Species.Animals.Antelope import Antelope
 from Species.Animals.CyberSheep import CyberSheep
@@ -45,6 +48,7 @@ class App:
 
 		self.__thegrid = TheGrid(self.root, worldx, worldy, "+")
 		self.__thegrid.grid(row=1, column=0, columnspan=2, sticky=N + E + W + S)
+		self.__thegrid.bind("<Button-1>", self.addorg)
 
 		nextturnbtn = Button(self.root, text="Next turn")
 		nextturnbtn.grid(row=2, column=0, sticky=W + E)
@@ -130,6 +134,20 @@ class App:
 			"Matilda",
 			"Jenny"
 		])
+		self.__kinds = {
+			'W': Wolf,
+			'S': Sheep,
+			'F': Fox,
+			'T': Turtle,
+			'A': Antelope,
+			'H': Human,
+			'C': CyberSheep,
+			'G': Grass,
+			'D': Dairy,
+			'U': Guarana,
+			'B': WolfBerries,
+			'O': SosnowskysBorsch
+		}
 
 		# create world
 		self.world = World(worldx, worldy)
@@ -219,6 +237,14 @@ class App:
 
 	def dospecial(self, event):
 		self.tryhumantask(HumanTasks.DO_SPECIAL)
+
+	def addorg(self, event):
+		x = int(event.x/SCALE)
+		y = int(event.y/SCALE)
+		if x <= self.world.getmaxxy().x and y <= self.world.getmaxxy().y and self.world.getorganismbyposition(Coordinates(x, y)) is None:
+			self.world.addorganism(self.__kinds[OrganismDialog(self.root).show()](self.world, x, y))  # still can't believe this actually works
+		else:
+			Logger.log("Can't add new organism here")
 
 if __name__ == '__main__':
 	root = Tk()

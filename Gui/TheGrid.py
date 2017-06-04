@@ -19,9 +19,9 @@ class TheGrid(Canvas):
 			self.__buttons.append([])
 			self.__recs.append([])
 			for j in range(self.__h):
-				self.__buttons[i].append(self.create_text((i+1)*SCALE, (j+1)*SCALE, text=self.__buttontext))
-				self.__recs[i].append(self.create_rectangle((i+1)*SCALE+HALFSCALE, (j+1)*SCALE+HALFSCALE, (i+1)*SCALE-HALFSCALE, (j+1)*SCALE-HALFSCALE, outline=""))
-				self.__labels[i].append(self.create_text((i+1)*SCALE, (j+1)*SCALE))
+				self.__buttons[i].append(self.create_text(i*SCALE+HALFSCALE, j*SCALE+HALFSCALE, text=self.__buttontext))
+				self.__recs[i].append(self.create_rectangle(i*SCALE, j*SCALE, i*SCALE+SCALE, j*SCALE+SCALE, outline=""))
+				self.__labels[i].append(self.create_text(i*SCALE+HALFSCALE, j*SCALE+HALFSCALE))
 
 	def show(self, x, y, value, color):
 		self.itemconfig(self.__labels[x][y], state=NORMAL, text=value)

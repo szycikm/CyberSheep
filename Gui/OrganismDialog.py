@@ -1,0 +1,56 @@
+from tkinter import Toplevel, StringVar, Button, X
+
+class OrganismDialog(Toplevel):
+
+	def __init__(self, parent):
+		Toplevel.__init__(self, parent)
+		self.value = StringVar()
+		self.btnantelope = Button(self, text="Wolf")
+		self.btnantelope.bind("<Button-1>", lambda event, kind="W": self.__btnclick(kind))
+		self.btnantelope.pack(fill=X)
+		self.btncybersheep = Button(self, text="Sheep")
+		self.btncybersheep.bind("<Button-1>", lambda event, kind="S": self.__btnclick(kind))
+		self.btncybersheep.pack(fill=X)
+		self.btncybersheep = Button(self, text="Fox")
+		self.btncybersheep.bind("<Button-1>", lambda event, kind="F": self.__btnclick(kind))
+		self.btncybersheep.pack(fill=X)
+		self.btncybersheep = Button(self, text="Turtle")
+		self.btncybersheep.bind("<Button-1>", lambda event, kind="T": self.__btnclick(kind))
+		self.btncybersheep.pack(fill=X)
+		self.btncybersheep = Button(self, text="Antelope")
+		self.btncybersheep.bind("<Button-1>", lambda event, kind="A": self.__btnclick(kind))
+		self.btncybersheep.pack(fill=X)
+		self.btncybersheep = Button(self, text="Human")
+		self.btncybersheep.bind("<Button-1>", lambda event, kind="H": self.__btnclick(kind))
+		self.btncybersheep.pack(fill=X)
+		self.btncybersheep = Button(self, text="Cyber Sheep")
+		self.btncybersheep.bind("<Button-1>", lambda event, kind="C": self.__btnclick(kind))
+		self.btncybersheep.pack(fill=X)
+		self.btncybersheep = Button(self, text="Grass")
+		self.btncybersheep.bind("<Button-1>", lambda event, kind="G": self.__btnclick(kind))
+		self.btncybersheep.pack(fill=X)
+		self.btncybersheep = Button(self, text="Dairy")
+		self.btncybersheep.bind("<Button-1>", lambda event, kind="D": self.__btnclick(kind))
+		self.btncybersheep.pack(fill=X)
+		self.btncybersheep = Button(self, text="Guarana")
+		self.btncybersheep.bind("<Button-1>", lambda event, kind="U": self.__btnclick(kind))
+		self.btncybersheep.pack(fill=X)
+		self.btncybersheep = Button(self, text="Wolf Berries")
+		self.btncybersheep.bind("<Button-1>", lambda event, kind="B": self.__btnclick(kind))
+		self.btncybersheep.pack(fill=X)
+		self.btncybersheep = Button(self, text="Sosnowsky's Borsch")
+		self.btncybersheep.bind("<Button-1>", lambda event, kind="O": self.__btnclick(kind))
+		self.btncybersheep.pack(fill=X)
+
+		self.grab_set()
+		parent.lift()
+
+	def __btnclick(self, kind):
+		self.value.set(kind)
+		self.destroy()
+		self.grab_release()
+
+	def show(self):
+		self.wm_deiconify()
+		self.wait_window()
+		return self.value.get()

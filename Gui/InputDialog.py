@@ -1,4 +1,4 @@
-from tkinter import *
+from tkinter import Toplevel, StringVar, Label, Entry, Button, X
 
 # based on https://stackoverflow.com/questions/28443749/how-do-i-return-a-result-from-a-dialog
 
