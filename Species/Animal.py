@@ -1,3 +1,4 @@
+from Gui.Logger import Logger
 from Names import Names
 from Species.Organism import Organism, ADULT_AGE
 from Species.Plant import Plant
@@ -19,7 +20,7 @@ class Animal(Organism):
 	def incrementage(self):
 		super().incrementage()
 		if self.getage() == ADULT_AGE:
-			print("%s is all grown up now!" % (self.introduce()))  # TODO write this in UI
+			Logger.log("%s is all grown up now!" % (self.introduce()))
 
 	def introduce(self):
 		return "%s %s" % (Names.getspeciesname(self._type), self._name)
@@ -30,7 +31,7 @@ class Animal(Organism):
 	def move(self, nextposition):
 		if self.collision(self._fromworld.getorganismbyposition(nextposition)):
 			self._position = nextposition
-			print("%s moved to (%i,%i)" % (self.introduce(), self._position.x, self._position.y))  # TODO write this in UI
+			Logger.log("%s moved to (%i,%i)" % (self.introduce(), self._position.x, self._position.y))
 
 	def randomizefield(self):
 		"""just grab the first random field"""
@@ -47,7 +48,7 @@ class Animal(Organism):
 			for coords in self.randomizefields():
 				child = self.clone(self._fromworld, coords)
 				if self._fromworld.addorganism(child):
-					print("D'awww. %s and %s are having a baby! And it's name is %s" % (self.introduce(), other.introduce(), child.getname()))  # TODO write this in UI
+					Logger.log("D'awww. %s and %s are having a baby! And it's name is %s" % (self.introduce(), other.introduce(), child.getname()))
 					return False
 
 			# no place for the baby
@@ -65,9 +66,9 @@ class Animal(Organism):
 					return True  # we just killed organism that standed there -> we now take it's place
 			else:
 				if isinstance(other, Plant):
-					print("Oh no! %s ate %s and DIED!" % (self.introduce(), other.introduce()))  # we just ate a plant TODO write this in UI
+					Logger.log("Oh no! %s ate %s and DIED!" % (self.introduce(), other.introduce()))  # we just ate a plant
 				else:
-					print("Oh no! %s ate %s!" % (other.introduce(), self.introduce()))
+					Logger.log("Oh no! %s ate %s!" % (other.introduce(), self.introduce()))
 
 				self.die()
 				return False

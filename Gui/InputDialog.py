@@ -15,10 +15,12 @@ class InputDialog(Toplevel):
 		self.entry.pack(fill=X)
 		self.ok_button.pack(fill=X)
 		self.entry.bind("<Return>", self.__ok_click)
+		self.grab_set()
 		parent.lift()
 
-	def __ok_click(self, event=None):
+	def __ok_click(self, event):
 		self.destroy()
+		self.grab_release()
 
 	def show(self):
 		self.wm_deiconify()

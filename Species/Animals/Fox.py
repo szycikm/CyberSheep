@@ -1,3 +1,4 @@
+from Gui.Logger import Logger
 from Species.Animal import Animal
 
 
@@ -22,4 +23,4 @@ class Fox(Animal):
 			if collider is None or (collider is not None and collider.getstrength() <= self.getstrength()):
 				self.move(coords)
 				return
-		print("%s decided to stay in place" % (self.introduce()))  # TODO print this in UI
+		Logger.log("%s decided to stay in place" % (self.introduce()))

@@ -1,4 +1,6 @@
 from random import randint
+
+from Gui.Logger import Logger
 from Species.Animal import Animal
 
 TURTLE_RESIST_STRENGTH = 5
@@ -25,4 +27,4 @@ class Turtle(Animal):
 		if randint(0, 3) == 0:
 			super().action()
 		else:
-			print("%s decided not to move" % (self.introduce()))  # TODO print this in UI
+			Logger.log("%s decided not to move" % (self.introduce()))

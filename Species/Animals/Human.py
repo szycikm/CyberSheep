@@ -1,5 +1,6 @@
 from enum import Enum
 from Coordinates import Coordinates
+from Gui.Logger import Logger
 from Species.Animal import Animal
 
 SPECIAL_COUNTDOWN = 5
@@ -33,7 +34,7 @@ class Human(Animal):
 		if self.__specialcountdown > 0:
 			self.__specialcountdown -= 1
 			self.strength -= 1
-			print("%s's strength is dropping! %i turns till normal" % (self.introduce(), self.__specialcountdown))  # TODO print this in UI
+			Logger.log("%s's strength is dropping! %i turns till normal" % (self.introduce(), self.__specialcountdown))
 		if self.__nexttask == HumanTasks.GO_UP:
 			self.move(Coordinates(self._position.x, self._position.y - 1))
 		elif self.__nexttask == HumanTasks.GO_DOWN:
@@ -45,9 +46,9 @@ class Human(Animal):
 		elif self.__nexttask == HumanTasks.DO_SPECIAL:
 			self.__specialcountdown = SPECIAL_COUNTDOWN
 			self.strength = SPECIAL_STRENGTH
-			print("%s used their special ability!" % (self.introduce()))  # TODO print this in UI
+			Logger.log("%s used their special ability!" % (self.introduce()))
 		else:
-			print("%s had nothing to do this turn" % (self.introduce()))  # TODO print this in UI
+			Logger.log("%s had nothing to do this turn" % (self.introduce()))
 		self.__nexttask = HumanTasks.DO_NOTHING
 
 	def istasklegal(self, task):

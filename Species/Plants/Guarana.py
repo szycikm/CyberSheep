@@ -1,3 +1,4 @@
+from Gui.Logger import Logger
 from Species.Plant import Plant
 
 BONUS_STRENGTH = 3
@@ -17,5 +18,5 @@ class Guarana(Plant):
 
 	def tryresistattack(self, attacker):
 		attacker.setstrength(attacker.getstrength() + BONUS_STRENGTH)
-		print("%s ate %s and is FEELING STRONGER")  # TODO print in actual UI
+		Logger.log("%s ate %s and is FEELING STRONGER")
 		return False

@@ -1,3 +1,4 @@
+from Gui.Logger import Logger
 from Species.Animal import Animal
 
 
@@ -23,7 +24,7 @@ class Antelope(Animal):
 		for coords in self.randomizefields():
 			if self._fromworld.getorganismbyposition(coords) is None:
 				self.move(coords)
-				print("%s got away from %s" % (self.introduce(), attacker.introduce()))  # TODO write this in UI
+				Logger.log("%s got away from %s" % (self.introduce(), attacker.introduce()))
 				return True
-		print("%s tried to run, but you can't hide from %s" % (self.introduce(), attacker.introduce()))  # TODO write this in UI
+		Logger.log("%s tried to run, but you can't hide from %s" % (self.introduce(), attacker.introduce()))
 		return False
