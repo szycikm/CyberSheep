@@ -8,7 +8,8 @@ class Wolf(Animal):
 		self._age = age
 		self.strength = strength if strength != 0 else 9
 		self.initiative = initiative if initiative != 0 else 5
-		self._name = name
+		if name != "":
+			self._name = name
 		self._type = 'W'
 
 	def clone(self, fromworld, position):

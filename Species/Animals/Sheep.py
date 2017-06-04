@@ -8,7 +8,8 @@ class Sheep(Animal):
 		self._age = age
 		self.strength = strength if strength != 0 else 4
 		self.initiative = initiative if initiative != 0 else 4
-		self._name = name
+		if name != "":
+			self._name = name
 		self._type = 'S'
 
 	def clone(self, fromworld, position):

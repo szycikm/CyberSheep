@@ -52,16 +52,16 @@ class Animal(Organism):
 					return False
 
 			# no place for the baby
-			print("%s and %s wanted to have a baby, but the world decided otherwise" % (self.introduce(), other.introduce()))
+			Logger.log("%s and %s wanted to have a baby, but the world decided otherwise" % (self.introduce(), other.introduce()))
 			return False
 		else:
 			# stronger (or attacker) wins and takes looser's field
 			if self.getstrength() >= other.getstrength():
 				if other.tryresistattack(self):
-					print("%s resisted %s's attack!" % (other.introduce(), self.introduce()))
+					Logger.log("%s resisted %s's attack!" % (other.introduce(), self.introduce()))
 					return False  # other organism reflected attarck -> don't move
 				else:
-					print("Yeah! %s ate %s!" % (self.introduce(), other.introduce()))
+					Logger.log("Yeah! %s ate %s!" % (self.introduce(), other.introduce()))
 					other.die()  # how dramatic
 					return True  # we just killed organism that standed there -> we now take it's place
 			else:

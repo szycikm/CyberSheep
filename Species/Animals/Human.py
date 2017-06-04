@@ -15,6 +15,7 @@ class HumanTasks(Enum):
 	GO_RIGHT = 4
 	DO_SPECIAL = 5
 
+
 class Human(Animal):
 
 	def __init__(self, fromworld, x=None, y=None, age=0, strength=0, initiative=0, name="", specialcountdown=0):
@@ -22,7 +23,8 @@ class Human(Animal):
 		self._age = age
 		self.strength = strength if strength != 0 else 5
 		self.initiative = initiative if initiative != 0 else 4
-		self._name = name
+		if name != "":
+			self._name = name
 		self._type = 'H'
 		self.__specialcountdown = specialcountdown
 		self.__nexttask = HumanTasks.DO_NOTHING
@@ -70,7 +72,7 @@ class Human(Animal):
 
 	def die(self):
 		super().die()
-		self._fromworld.sethumanalive(False)
+		self._fromworld.humanalive = False
 
 	def tostring(self):
 		return "%s%i" % (super().tostring(), self.__specialcountdown)

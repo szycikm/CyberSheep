@@ -42,19 +42,16 @@ class World:
 				self.__organisms[i].action()
 
 			if self.__organisms[i].isalive():  # again, because self organism might have just died
-				self.__organisms[i].incrementAge()
+				self.__organisms[i].incrementage()
 
 		# clean dead __organisms
-		for i in range(0, self.getorganismcount()):
-			if not self.__organisms[i].isalive():
-				self.__organisms.remove(self.__organisms[i])
-				i -= 1  # because we just deleted i-th element
+		self.__organisms = list(filter(lambda org: org.isalive(), self.__organisms))
 
 	def addorganism(self, o):
-		if o.getxy().x >= self.__maxxy.x or o.getxy().y >= self.__maxxy.y or o.getor().x < 0 or o.getXY().y < 0:
+		if o.getxy().x >= self.__maxxy.x or o.getxy().y >= self.__maxxy.y or o.getxy().x < 0 or o.getxy().y < 0:
 			# coordinates outside of self world
 			return False
-		elif self.getorganismbyposition(o.getxy()) is None:
+		elif self.getorganismbyposition(o.getxy()) is not None:
 			# field already occupied
 			return False
 		else:

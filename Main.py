@@ -1,8 +1,21 @@
+from random import randint
 from tkinter import *
 from tkinter.ttk import Treeview
 from Gui.InputDialog import InputDialog
 from Gui.Logger import Logger
 from Names import Names
+from Species.Animals.Antelope import Antelope
+from Species.Animals.CyberSheep import CyberSheep
+from Species.Animals.Fox import Fox
+from Species.Animals.Human import Human
+from Species.Animals.Sheep import Sheep
+from Species.Animals.Turtle import Turtle
+from Species.Animals.Wolf import Wolf
+from Species.Plants.Dairy import Dairy
+from Species.Plants.Grass import Grass
+from Species.Plants.Guarana import Guarana
+from Species.Plants.SosnowskysBorsch import SosnowskysBorsch
+from Species.Plants.WolfBerries import WolfBerries
 from World import World
 
 # initial spawn config
@@ -94,8 +107,47 @@ class App:
 		worldx = int(InputDialog(self.root, "Enter world x").show())
 		worldy = int(InputDialog(self.root, "Enter world y").show())
 
+		# create world
 		self.world = World(worldx, worldy)
 		Logger.log("Created world (%dx%d)" % (worldx, worldy))
+
+		self.world.addorganism(Human(self.world))  # HUMAN AFTER ALL (actually add him first)
+		self.world.humanalive = True  # yep, he sure seems alive
+
+		# add healthy amount of other organisms
+
+		for i in range(0, randint(0, ANIMAL_START_MAX)):
+			self.world.addorganism(Wolf(self.world))
+
+		for i in range(0, randint(0, ANIMAL_START_MAX)):
+			self.world.addorganism(Sheep(self.world))
+
+		for i in range(0, randint(0, ANIMAL_START_MAX)):
+			self.world.addorganism(Fox(self.world))
+
+		for i in range(0, randint(0, ANIMAL_START_MAX)):
+			self.world.addorganism(Turtle(self.world))
+
+		for i in range(0, randint(0, ANIMAL_START_MAX)):
+			self.world.addorganism(Antelope(self.world))
+
+		for i in range(0, randint(0, ANIMAL_START_MAX)):
+			self.world.addorganism(CyberSheep(self.world))
+
+		for i in range(0, randint(0, PLANT_START_MAX)):
+			self.world.addorganism(Grass(self.world))
+
+		for i in range(0, randint(0, PLANT_START_MAX)):
+			self.world.addorganism(Dairy(self.world))
+
+		for i in range(0, randint(0, PLANT_START_MAX)):
+			self.world.addorganism(Guarana(self.world))
+
+		for i in range(0, randint(0, PLANT_START_MAX)):
+			self.world.addorganism(WolfBerries(self.world))
+
+		for i in range(0, randint(0, PLANT_START_MAX)):
+			self.world.addorganism(SosnowskysBorsch(self.world))
 
 	def doturn(self, event):
 		self.turn += 1

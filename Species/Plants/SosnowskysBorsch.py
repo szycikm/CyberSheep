@@ -1,6 +1,5 @@
 from Gui.Logger import Logger
 from Species.Animal import Animal
-from Species.Animals.CyberSheep import CyberSheep
 from Species.Plant import Plant
 
 
@@ -20,7 +19,8 @@ class SosnowskysBorsch(Plant):
 		"""destroy them with lazers"""
 		for coords in self.randomizefields():
 			victim = self._fromworld.getorganismbyposition(coords)
+			from Species.Animals.CyberSheep import CyberSheep
 			if victim is not None and isinstance(victim, Animal) and not isinstance(victim, CyberSheep):
 				Logger.log("%s got too close to %s and DIED" % (victim.introduce(), self.introduce()))
 				victim.die()
-		self.action()  # and after it kills everything, it tries to reproduce
+		super().action()  # and after it kills everything, it tries to reproduce

@@ -1,8 +1,6 @@
 import math
-
 from Coordinates import Coordinates
 from Species.Animal import Animal
-from Species.Plants.SosnowskysBorsch import SosnowskysBorsch
 
 
 class CyberSheep(Animal):
@@ -12,7 +10,8 @@ class CyberSheep(Animal):
 		self._age = age
 		self.strength = strength if strength != 0 else 11
 		self.initiative = initiative if initiative != 0 else 4
-		self._name = name
+		if name != "":
+			self._name = name
 		self._type = 'C'
 
 	def clone(self, fromworld, position):
@@ -21,6 +20,7 @@ class CyberSheep(Animal):
 	def action(self):  # TODO test
 		target = None
 		nearestdistance = -1
+		from Species.Plants.SosnowskysBorsch import SosnowskysBorsch
 		for org in self._fromworld.getorganismsbytype(SosnowskysBorsch):
 			dist = org.getdistanceto(self)
 			if (target is not None and dist < nearestdistance) or nearestdistance == -1:
